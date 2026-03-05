@@ -29,3 +29,6 @@ pip install -r requirements.txt
 python etl/load_sales.py
 pytest -q
 ```
+
+## Pipeline Flow
+![Quick ETL Flow](assets/flow.svg)
