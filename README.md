@@ -1,45 +1,31 @@
+![Quick ETL Demo Hero](assets/hero.svg)
+
 # Quick ETL Demo
 
-**Purpose**  
-End‑to‑end demo that satisfies adroitts deliverables: high‑level design, ETL code, unit tests, runbook, and traceability matrix.
+A compact, end to end ETL sample that loads CSV sales data into Postgres, with tests and operations docs included.
+
+## Highlights
+- Extract: reads from `sample_sales.csv`.
+- Transform: normalizes data with Pandas.
+- Load: writes into Postgres table `sales`.
+- Validation: includes `pytest` coverage.
+- Documentation: includes runbook and RTM mapping.
+
+## Repo Layout
+- `etl/load_sales.py` ETL entrypoint.
+- `tests/test_load.py` smoke test for row loading.
+- `runbook.md` run and recovery procedures.
+- `RTM.csv` requirement traceability matrix.
 
 ## Prerequisites
-- Python 3.12+
-- Homebrew Postgres 15 (or any local Postgres listening on `etl_demo`)
+- Python 3.10+
+- Local Postgres database named `etl_demo`
 
-## Quick Start
+## Run
 ```bash
-python etl/load_sales.py     # load sample_sales.csv into Postgres
-pytest -q                    # run tests
-High‑Level Design
-Extract sample_sales.csv
-Transform via Pandas (type casting)
-Load into Postgres table sales
-Detailed Design
-Table schema: order_id INT PK, order_date DATE, product TEXT, qty INT, price NUMERIC
-Load mode: REPLACE (rerunnable demo)
-See runbook.md for ops steps and RTM.csv for requirement mapping.
-
-Save the file.
-
----
-
-## 3  Runbook & RTM Touch‑Up
-
-### runbook.md (minimal)
-
-```md
-## Daily Run
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 python etl/load_sales.py
-
-## Failure Recovery
-If the script errors, check Postgres is running (`brew services list`) and rerun.
-
-## Table Reset
-The script uses `if_exists="replace"` so reruns are idempotent.
-ID,Requirement,Implementation
-1,High‑level ETL design,README.md
-2,Detailed ETL design,etl/load_sales.py comments
-3,ETL code development,etl/load_sales.py
-4,Unit tests,tests/test_load.py
-5,Runbook,user guide,runbook.md
+pytest -q
+```
